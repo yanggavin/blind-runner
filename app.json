@@ -1,19 +1,38 @@
 {
   "expo": {
-    "name": "blind-runner-app",
+    "name": "Blind Runner App",
     "slug": "blind-runner-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "scheme": "blindrunner",
+    "linking": {
+      "prefixes": ["blindrunner://", "https://blindrunner.app"],
+      "config": {
+        "screens": {
+          "index": "/",
+          "history": "/history",
+          "settings": "/settings",
+          "run/active": "/run/active",
+          "history/[id]": "/history/:id"
+        }
+      }
+    },
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs location access to track your runs and provide accurate distance and pace information.",
+        "NSLocationWhenInUseUsageDescription": "This app needs location access to track your runs and provide accurate distance and pace information.",
+        "NSLocationAlwaysUsageDescription": "This app needs background location access to continue tracking your runs when the app is not in the foreground.",
+        "UIBackgroundModes": ["location", "audio"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,10 +40,32 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "VIBRATE",
+        "SEND_SMS",
+        "READ_PHONE_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Blind Runner App to use your location to track runs.",
+          "locationAlwaysPermission": "Allow Blind Runner App to use your location in the background to continue tracking runs.",
+          "locationWhenInUsePermission": "Allow Blind Runner App to use your location to track runs.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      "expo-sqlite"
+    ]
   }
 }
